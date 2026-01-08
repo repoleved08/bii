@@ -24,23 +24,62 @@
 
 **Linux (amd64):**
 ```bash
-wget https://github.com/repoleved08/bii/releases/latest/download/bii-linux-amd64
+# Download the latest release (v0.1.0)
+wget https://github.com/repoleved08/bii/releases/download/v0.1.0/bii-linux-amd64
 chmod +x bii-linux-amd64
 mkdir -p ~/.local/bin
 mv bii-linux-amd64 ~/.local/bin/bii
-export PATH="$HOME/.local/bin:$PATH"
+
+# Add to PATH (if not already)
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+# Verify installation
+bii version
+```
+
+**Linux (arm64):**
+```bash
+wget https://github.com/repoleved08/bii/releases/download/v0.1.0/bii-linux-arm64
+chmod +x bii-linux-arm64
+mkdir -p ~/.local/bin
+mv bii-linux-arm64 ~/.local/bin/bii
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+**macOS (Intel):**
+```bash
+curl -LO https://github.com/repoleved08/bii/releases/download/v0.1.0/bii-darwin-amd64
+chmod +x bii-darwin-amd64
+mkdir -p ~/.local/bin
+mv bii-darwin-amd64 ~/.local/bin/bii
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
 ```
 
 **macOS (Apple Silicon):**
 ```bash
-wget https://github.com/repoleved08/bii/releases/latest/download/bii-darwin-arm64
+curl -LO https://github.com/repoleved08/bii/releases/download/v0.1.0/bii-darwin-arm64
 chmod +x bii-darwin-arm64
 mkdir -p ~/.local/bin
 mv bii-darwin-arm64 ~/.local/bin/bii
-export PATH="$HOME/.local/bin:$PATH"
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
 ```
 
-See [INSTALL.md](INSTALL.md) for more installation options.
+**Windows (amd64):**
+```powershell
+# Download from: https://github.com/repoleved08/bii/releases/download/v0.1.0/bii-windows-amd64.exe
+# Move to a directory in your PATH or add the directory to PATH
+```
+
+**Or build from source:**
+```bash
+go install github.com/repoleved08/bii@v0.1.0
+```
+
+See [INSTALL.md](INSTALL.md) for more installation options and troubleshooting.
 
 ### Usage
 
