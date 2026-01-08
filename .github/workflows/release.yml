@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Build binaries
+        run: |
+          mkdir -p dist
+          GOOS=linux GOARCH=amd64 go build -o dist/bii-linux-amd64 .
+          GOOS=linux GOARCH=arm64 go build -o dist/bii-linux-arm64 .
+          GOOS=darwin GOARCH=amd64 go build -o dist/bii-darwin-amd64 .
+          GOOS=darwin GOARCH=arm64 go build -o dist/bii-darwin-arm64 .
+          GOOS=windows GOARCH=amd64 go build -o dist/bii-windows-amd64.exe .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/bii-linux-amd64
+            dist/bii-linux-arm64
+            dist/bii-darwin-amd64
+            dist/bii-darwin-arm64
+            dist/bii-windows-amd64.exe
+          body: |
+            ## Installation
+
+            ### Linux (amd64)
+            ```bash
+            wget https://github.com/repoleved08/bii/releases/download/${{ github.ref_name }}/bii-linux-amd64
+            chmod +x bii-linux-amd64
+            mkdir -p ~/.local/bin
+            mv bii-linux-amd64 ~/.local/bin/bii
+            ```
+
+            ### macOS (Apple Silicon)
+            ```bash
+            wget https://github.com/repoleved08/bii/releases/download/${{ github.ref_name }}/bii-darwin-arm64
+            chmod +x bii-darwin-arm64
+            mkdir -p ~/.local/bin
+            mv bii-darwin-arm64 ~/.local/bin/bii
+            ```
+
+            See [INSTALL.md](https://github.com/repoleved08/bii/blob/main/INSTALL.md) for more installation options.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
